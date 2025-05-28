@@ -3,18 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image</title>
+    <title>Wex Inc - Image Upload</title>
     <style>
+        :root {
+            --wex-blue: #0033A0;
+            --wex-light-blue: #0055D4;
+            --wex-gray: #666666;
+            --wex-light-gray: #f5f5f5;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
+            padding: 0;
+            background-color: var(--wex-light-gray);
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
+
+        .header {
+            width: 100%;
+            background-color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .wex-logo {
+            height: 30px;
+            width: auto;
+        }
+
         .container {
             max-width: 500px;
             width: 100%;
@@ -22,73 +53,126 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 80px;
+            margin-bottom: 20px;
         }
+
+        h1 {
+            color: var(--wex-blue);
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         #camera-container {
             width: 100%;
             margin-bottom: 20px;
+            background-color: var(--wex-light-gray);
+            border-radius: 5px;
+            overflow: hidden;
         }
+
         #camera-preview {
             width: 100%;
             height: auto;
             border-radius: 5px;
             display: none;
         }
+
         #camera-view {
             width: 100%;
             height: auto;
             border-radius: 5px;
         }
+
         .button-group {
             display: flex;
             gap: 10px;
             justify-content: center;
             margin-top: 15px;
         }
+
         button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 5px;
-            background-color: #007bff;
+            background-color: var(--wex-blue);
             color: white;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
             transition: background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+
         button:hover {
-            background-color: #0056b3;
+            background-color: var(--wex-light-blue);
         }
+
         button:disabled {
-            background-color: #cccccc;
+            background-color: var(--wex-gray);
             cursor: not-allowed;
         }
+
         #retake-btn {
-            background-color: #dc3545;
+            background-color: var(--wex-gray);
         }
+
         #retake-btn:hover {
-            background-color: #c82333;
+            background-color: #555555;
         }
+
         #submit-btn {
-            background-color: #28a745;
+            background-color: var(--wex-blue);
         }
+
         #submit-btn:hover {
-            background-color: #218838;
+            background-color: var(--wex-light-blue);
         }
+
         .status {
             margin-top: 15px;
-            padding: 10px;
+            padding: 15px;
             border-radius: 5px;
             text-align: center;
             display: none;
+            font-weight: 500;
         }
+
         .success {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #e6f3ff;
+            color: var(--wex-blue);
+            border: 1px solid var(--wex-blue);
+        }
+
+        .error {
+            background-color: #fff0f0;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+
+        .instructions {
+            color: var(--wex-gray);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="header-content">
+            <img src="https://www.wexinc.com/wp-content/themes/wex/assets/images/wex-logo.svg" alt="Wex Inc Logo" class="wex-logo">
+        </div>
+    </div>
+
     <div class="container">
-        <h1>Take a Photo</h1>
+        <h1>Document Upload</h1>
+        <p class="instructions">
+            Please take a clear photo of your document. Make sure all text is visible and the image is well-lit.
+        </p>
         <div id="camera-container">
             <video id="camera-view" autoplay playsinline></video>
             <img id="camera-preview" alt="Preview">
@@ -122,8 +206,7 @@
                 console.error('Error accessing camera:', err);
                 status.textContent = 'Error accessing camera. Please make sure you have granted camera permissions.';
                 status.style.display = 'block';
-                status.style.backgroundColor = '#f8d7da';
-                status.style.color = '#721c24';
+                status.className = 'status error';
             }
         }
 
@@ -158,7 +241,7 @@
         // Submit photo
         submitBtn.addEventListener('click', () => {
             // In a real application, you would send the image data to a server here
-            status.textContent = 'Image captured successfully! (Demo mode - no actual upload)';
+            status.textContent = 'Document captured successfully! (Demo mode - no actual upload)';
             status.style.display = 'block';
             status.className = 'status success';
             
