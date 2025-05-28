@@ -3,24 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Upload Image</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 20px;
             background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-        h1 {
-            color: #333;
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #camera-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        #camera-preview {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: none;
+        }
+        #camera-view {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #retake-btn {
+            background-color: #dc3545;
+        }
+        #retake-btn:hover {
+            background-color: #c82333;
+        }
+        #submit-btn {
+            background-color: #28a745;
+        }
+        #submit-btn:hover {
+            background-color: #218838;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
             text-align: center;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
         }
     </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <div class="container">
+        <h1>Take a Photo</h1>
+        <div id="camera-container">
+            <video id="camera-view" autoplay playsinline></video>
+            <img id="camera-preview" alt="Preview">
+        </div>
+        <div class="button-group">
+            <button id="capture-btn">Take Photo</button>
+            <button id="retake-btn" style="display: none;">Retake</button>
+            <button id="submit-btn" style="display: none;">Submit</button>
+        </div>
+        <div id="status" class="status"></div>
+    </div>
+
+    <script>
+        const cameraView = document.getElementById('camera-view');
+        const cameraPreview = document.getElementById('camera-preview');
+        const captureBtn = document.getElementById('capture-btn');
+        const retakeBtn = document.getElementById('retake-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const status = document.getElementById('status');
+        let stream = null;
+
+        // Start camera when page loads
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'environment' },
+                    audio: false
+                });
+                cameraView.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+                status.textContent = 'Error accessing camera. Please make sure you have granted camera permissions.';
+                status.style.display = 'block';
+                status.style.backgroundColor = '#f8d7da';
+                status.style.color = '#721c24';
+            }
+        }
+
+        // Capture photo
+        captureBtn.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = cameraView.videoWidth;
+            canvas.height = cameraView.videoHeight;
+            canvas.getContext('2d').drawImage(cameraView, 0, 0);
+            
+            // Show preview
+            cameraPreview.src = canvas.toDataURL('image/jpeg');
+            cameraPreview.style.display = 'block';
+            cameraView.style.display = 'none';
+            
+            // Show retake and submit buttons
+            captureBtn.style.display = 'none';
+            retakeBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'inline-block';
+        });
+
+        // Retake photo
+        retakeBtn.addEventListener('click', () => {
+            cameraPreview.style.display = 'none';
+            cameraView.style.display = 'block';
+            captureBtn.style.display = 'inline-block';
+            retakeBtn.style.display = 'none';
+            submitBtn.style.display = 'none';
+            status.style.display = 'none';
+        });
+
+        // Submit photo
+        submitBtn.addEventListener('click', () => {
+            // In a real application, you would send the image data to a server here
+            status.textContent = 'Image captured successfully! (Demo mode - no actual upload)';
+            status.style.display = 'block';
+            status.className = 'status success';
+            
+            // Disable buttons after submission
+            submitBtn.disabled = true;
+            retakeBtn.disabled = true;
+        });
+
+        // Start camera when page loads
+        startCamera();
+    </script>
 </body>
 </html> 
