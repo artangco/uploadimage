@@ -26,7 +26,7 @@
         .header {
             width: 100%;
             background-color: white;
-            padding: 15px 0;
+            padding: 10px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             top: 0;
@@ -42,7 +42,7 @@
         }
 
         .wex-logo {
-            height: 30px;
+            height: 25px;
             width: auto;
         }
 
@@ -50,31 +50,37 @@
             max-width: 500px;
             width: 100%;
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-top: 80px;
+            margin-top: 60px;
             margin-bottom: 20px;
         }
 
         h1 {
             color: var(--wex-blue);
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 20px;
+            margin: 0 0 15px 0;
             text-align: center;
         }
 
         #camera-container {
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             background-color: var(--wex-light-gray);
             border-radius: 5px;
             overflow: hidden;
+            max-height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #camera-preview {
             width: 100%;
             height: auto;
+            max-height: 50vh;
+            object-fit: contain;
             border-radius: 5px;
             display: none;
         }
@@ -82,6 +88,8 @@
         #camera-view {
             width: 100%;
             height: auto;
+            max-height: 50vh;
+            object-fit: contain;
             border-radius: 5px;
         }
 
@@ -89,17 +97,17 @@
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         button {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             background-color: var(--wex-blue);
             color: white;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             transition: background-color 0.3s;
             text-transform: uppercase;
@@ -132,12 +140,13 @@
         }
 
         .status {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 10px;
+            padding: 10px;
             border-radius: 5px;
             text-align: center;
             display: none;
             font-weight: 500;
+            font-size: 14px;
         }
 
         .success {
@@ -154,17 +163,17 @@
 
         .instructions {
             color: var(--wex-gray);
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            margin-bottom: 15px;
+            line-height: 1.4;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-content">
-            <img src="https://www.wexinc.com/wp-content/themes/wex/assets/images/wex-logo.svg" alt="Wex Inc Logo" class="wex-logo">
+            <img src="https://www.wexinc.com/wp-content/uploads/2023/03/wex-logo.svg" alt="Wex Inc Logo" class="wex-logo">
         </div>
     </div>
 
